@@ -1,3 +1,21 @@
+const Spec = [
+    /* Whitespaces */
+    [/^\s+/, null],
+
+    /* Comments */
+    // Single-line comments
+    [/^\/\/.*/, null],
+    // Multi-line comments
+    [/^\/\*[\s\S]*?\*\// , null],
+
+    /* Numbers */
+    [/^\d+/, 'NUMBER'],
+
+    /* Strings */
+    [/"[^"]*"/, 'STRING'],
+    [/'[^']*'/, 'STRING'],
+];
+
 class Tokenizer {
     init(string) {
         this._string = string;
@@ -13,38 +31,40 @@ class Tokenizer {
             return null;
         }
 
-        // Numbers:
-        if (!Number.isNaN(Number(this._string[this._cursor]))) {
-            let number = '';
-            while (this.hasMoreTokens() && !Number.isNaN(this._string[this._cursor])) {
-                number += this._string[this._cursor++];
+        const string = this._string.slice(this._cursor);
+
+        for (const [regex, tokenType] of Spec) {
+            const tokenValue = this._match(regex, string);
+
+            if (tokenValue == null) {
+                continue;
             }
+
+            /* Skip f.e. whitespaces */
+            if (tokenType == null) {
+                return this.getNextToken();
+            }
+
             return {
-                type: 'NUMBER',
-                value: number
-            }
+                type: tokenType,
+                value: tokenValue
+            };
         }
 
-        //String
-        if (this._string[this._cursor] === '"' || this._string[this._cursor] === '\'') {
-            let quote = this._string[this._cursor];
-            let s = '';
-            do {
-                s += this._string[this._cursor++];
-            } while (this._string[this._cursor] !== quote && !this.isEOF());
-            this._cursor++; // consume " or '
-            s += quote;
-            return {
-                type: 'STRING',
-                value: s
-            }
-        }
-
-
+        throw new SyntaxError(`Unexpected token: "${string[0]}"`);
     }
 
     isEOF() {
         return this._cursor === this._string.length;
+    }
+
+    _match(regex, string) {
+        const matched = regex.exec(string);
+        if (matched == null) {
+            return null;
+        }
+        this._cursor += matched[0].length;
+        return matched[0];
     }
 }
 
