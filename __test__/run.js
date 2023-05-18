@@ -4,7 +4,9 @@ const assert = require("assert");
 /* List of tests */
 const tests = [
     require('./literals-test'),
-    require('./statement-list-test')
+    require('./statement-list-test'),
+    require('./block-test'),
+    require('./empty-statement-test')
 ];
 
 const parser = new Parser();
@@ -16,13 +18,15 @@ function test(program, expected) {
 
 function exec() {
 
-    const program = `   
+    const program = `
+    {   
          // Numbers:
          42;   
          /*
          * Documentation comment
          */
          "hello";
+     }
   `;
 
     const ast = parser.parse(program);
