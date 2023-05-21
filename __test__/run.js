@@ -6,7 +6,8 @@ const tests = [
     require('./literals-test'),
     require('./statement-list-test'),
     require('./block-test'),
-    require('./empty-statement-test')
+    require('./empty-statement-test'),
+    require('./math-test')
 ];
 
 const parser = new Parser();
@@ -19,14 +20,7 @@ function test(program, expected) {
 function exec() {
 
     const program = `
-    {   
-         // Numbers:
-         42;   
-         /*
-         * Documentation comment
-         */
-         "hello";
-     }
+         2 * 2 * 2 * 2 * 2;
   `;
 
     const ast = parser.parse(program);
