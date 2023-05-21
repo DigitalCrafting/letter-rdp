@@ -8,7 +8,7 @@ const Spec = [
     // Single-line comments
     [/^\/\/.*/, null],
     // Multi-line comments
-    [/^\/\*[\s\S]*?\*\// , null],
+    [/^\/\*[\s\S]*?\*\//, null],
 
     /* ---------------------------------- */
     /* Symbol delimiters */
@@ -19,13 +19,22 @@ const Spec = [
     [/^\)/, ')'],
 
     /* ---------------------------------- */
+    /* Numbers */
+    [/^\d+/, 'NUMBER'],
+
+    /* ---------------------------------- */
+    /* Identifiers: */
+    [/^\w+/, 'IDENTIFIER'],
+
+    /* ---------------------------------- */
+    /* Assignment operators: =, +=, -=, *=, /= */
+    [/^=/, 'SIMPLE_ASSIGN'],
+    [/^[+\-*\/]=/, 'COMPLEX_ASSIGN'],
+
+    /* ---------------------------------- */
     /* Math operators: +, -, *, / */
     [/^[+\-]/, 'ADDITIVE_OPERATOR'],
     [/^[*\/]/, 'MULTIPLICATIVE_OPERATOR'],
-
-    /* ---------------------------------- */
-    /* Numbers */
-    [/^\d+/, 'NUMBER'],
 
     /* ---------------------------------- */
     /* Strings */
