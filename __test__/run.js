@@ -8,7 +8,8 @@ const tests = [
     require('./block-test'),
     require('./empty-statement-test'),
     require('./math-test'),
-    require('./assignment-test')
+    require('./assignment-test'),
+    require('./variable-test')
 ];
 
 const parser = new Parser();
@@ -21,8 +22,10 @@ function test(program, expected) {
 function exec() {
 
     const program = `
-        x + x ;
-         x = 42;
+        let y;
+        let a, b;
+        let c, d = 10;
+        let x = 42;
   `;
 
     const ast = parser.parse(program);
