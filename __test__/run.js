@@ -9,7 +9,9 @@ const tests = [
     require('./empty-statement-test'),
     require('./math-test'),
     require('./assignment-test'),
-    require('./variable-test')
+    require('./variable-test'),
+    require('./if-test'),
+    require('./relational-test'),
 ];
 
 const parser = new Parser();
@@ -22,10 +24,11 @@ function test(program, expected) {
 function exec() {
 
     const program = `
-        let y;
-        let a, b;
-        let c, d = 10;
-        let x = 42;
+    if (x > 0) {
+        x = 0;
+    } else {
+        x += 1;
+    }
   `;
 
     const ast = parser.parse(program);
