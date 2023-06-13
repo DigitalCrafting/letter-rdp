@@ -18,6 +18,7 @@ const tests = [
     require('./while-test'),
     require('./do-while-test'),
     require('./for-test'),
+    require('./function-declaration-test'),
 ];
 
 const parser = new Parser();
@@ -30,9 +31,12 @@ function test(program, expected) {
 function exec() {
 
     const program = `
-        for (i = 0; i < 10; i += 1) {
-            x += i;
+        def square(x) {
+            return x * x;
         }
+        
+        //square(2);
+        
     `;
 
     const ast = parser.parse(program);
