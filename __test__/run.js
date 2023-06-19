@@ -19,7 +19,8 @@ const tests = [
     require('./do-while-test'),
     require('./for-test'),
     require('./function-declaration-test'),
-    require('./member-test')
+    require('./member-test'),
+    require('./call-test'),
 ];
 
 const parser = new Parser();
@@ -36,9 +37,11 @@ function exec() {
         let i = 0;
         
         while (i < s.length) {
-            s[i];
+            console.log(s[i]);
             i += 1;
         }
+        
+        test();
     `;
 
     const ast = parser.parse(program);
